@@ -24,6 +24,12 @@ class KittenPolice
     puts "Crime Scene Coordinates:"
     puts "x: #{crime_scene.x}"
     puts "y: #{crime_scene.y}"
+
+    uri = URI("http://which-technical-exercise.herokuapp.com/api/#{@email}/location/#{crime_scene.x}/#{crime_scene.y}")
+    response = Net::HTTP.get_response(uri)
+    body = JSON.parse(response.body)
+    return [] unless response.is_a?(Net::HTTPSuccess)
+    puts body['message']
   end
 
   protected
